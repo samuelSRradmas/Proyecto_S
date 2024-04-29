@@ -1,0 +1,16 @@
+<div class="modal">
+  <mat-dialog-content >
+      <h2>
+        {{aviso.service_name}}
+      </h2>
+      <p><span>Dirección: </span>{{aviso.address}}</p>
+      <p><span>Fecha de solicitud: </span>{{aviso.requested_datetime | date: 'dd/MM/yyyy'}}</p>
+      <p><span>Fecha aproximada de ejecución: </span>{{aviso.estimated_start_datetime | date: 'dd/MM/yyyy'}}</p>
+      <p><span>Fecha aproximada de finalización: </span>{{aviso.estimated_final_datetime | date: 'dd/MM/yyyy'}}</p>
+      <p><span>Descripción:</span></p>
+      <p>{{aviso.description}}</p>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+      <button mat-button mat-dialog-close class="btn">Aceptar</button>
+  </mat-dialog-actions>
+</div>

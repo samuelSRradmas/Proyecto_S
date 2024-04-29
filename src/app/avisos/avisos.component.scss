@@ -1,0 +1,24 @@
+.avisos{
+    height:100%;
+    overflow-y: auto;
+
+   
+}
+.aviso-card:hover{
+    background-color: lightgrey;
+}
+.aviso-card{
+    border: 1px solid grey;
+    width: 100%;
+}
+.lista-flex{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+}
+.opcion-lista-flex{
+    width: 90%;
+}
+
+
