@@ -8,15 +8,15 @@ import { ModalService } from '../SERVICIOS/modal.service';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import {MatIconModule} from '@angular/material/icon';
-import {MatMenuModule} from '@angular/material/menu';
-import {MatRippleModule} from '@angular/material/core';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatRippleModule } from '@angular/material/core';
 import { AvisoDataService } from '../SERVICIOS/aviso.data.service';
 
 @Component({
   selector: 'app-avisos',
   standalone: true,
-  imports: [CommonModule, MatListModule, MatButtonModule, MatCardModule, MatSidenavModule, MatProgressSpinnerModule,MatTooltipModule,MatIconModule,MatMenuModule, MatRippleModule],
+  imports: [CommonModule, MatListModule, MatButtonModule, MatCardModule, MatSidenavModule, MatProgressSpinnerModule, MatTooltipModule, MatIconModule, MatMenuModule, MatRippleModule],
   templateUrl: './avisos.component.html',
   styleUrl: './avisos.component.scss'
 })
@@ -31,8 +31,8 @@ export class AvisosComponent implements OnInit {
   ) {
     this.avisos = [];
     this.visible = true;
-    this.page=1;
-    this.limit=20;
+    this.page = 1;
+    this.limit = 20;
   }
   ngOnInit(): void {
     this.getAvisos();
@@ -40,10 +40,10 @@ export class AvisosComponent implements OnInit {
   getAvisos() {
     this._avisoDataService.getAvisosPaginados().subscribe(
       response => {
-        this.avisos= response;
-          },
-          error => { console.log(error) }
-        )
+        this.avisos = response;
+      },
+      error => { console.log(error) }
+    )
   }
   showDetail(aviso: Aviso) {
     this._modalService.showAviso(aviso);

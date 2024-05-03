@@ -25,7 +25,6 @@ mat-toolbar {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  //width: auto;
   flex-grow: 1;
 }
 
@@ -33,7 +32,7 @@ mat-toolbar {
   height: 100%;
 }
 
-mat-slider{
+mat-slider {
   flex-grow: 1;
 }
 
@@ -47,24 +46,22 @@ mat-slider{
   text-align: center;
 }
 
-.toolbar{
+.toolbar {
   display: flex;
   justify-content: space-around;
   flex-grow: 1;
 }
 
-.slider{
+.slider {
   flex-grow: 1;
   text-align: center;
-  //display: flex;
-  //justify-content: space-around;
 }
 
-app-paginator{
+app-paginator {
   flex-grow: 1;
 }
 
-.separador{
+.separador {
   flex-grow: 1;
 }
 

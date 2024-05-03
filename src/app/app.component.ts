@@ -8,8 +8,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import {MatSliderModule} from '@angular/material/slider';
-import {MatMenuModule} from '@angular/material/menu';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatMenuModule } from '@angular/material/menu';
 import { ZoomService } from './SERVICIOS/zoom.service';
 
 
@@ -18,7 +18,7 @@ import { ZoomService } from './SERVICIOS/zoom.service';
   standalone: true,
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
-  imports: [RouterOutlet, MapaComponent, AvisosComponent, PaginatorComponent, CommonModule, MatButtonModule, MatSidenavModule, MatIconModule, MatToolbarModule,MatSliderModule,MatMenuModule]
+  imports: [RouterOutlet, MapaComponent, AvisosComponent, PaginatorComponent, CommonModule, MatButtonModule, MatSidenavModule, MatIconModule, MatToolbarModule, MatSliderModule, MatMenuModule]
 })
 export class AppComponent {
   title = 'Proyecto_S';
@@ -36,8 +36,8 @@ export class AppComponent {
   onResize(event: any) {
     this.screenWidth = window.innerWidth;
   }
-  adjustZoom(level: any){
-    console.log (level)
+  adjustZoom(level: any) {
+    console.log(level)
   }
   onSliderChange(event: any) {
     const valorSlider = +event.target.value;

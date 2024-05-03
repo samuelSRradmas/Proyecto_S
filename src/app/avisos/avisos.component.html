@@ -1,6 +1,7 @@
 <div class="avisos" [ngClass]="{'spinner': avisos.length==0}">
     <mat-selection-list *ngIf="avisos.length>0" role="list" class="lista-flex">
-        <mat-list class="ripple-container opcion-lista-flex" matRipple matRippleColor="#683ab7b4" *ngFor="let aviso of avisos">
+        <mat-list class="ripple-container opcion-lista-flex" matRipple matRippleColor="#683ab7b4"
+            *ngFor="let aviso of avisos">
             <mat-card matTooltip="Pulsa para ver más información de {{aviso.service_name}}" matTooltipPosition="after"
                 class="aviso-card" (click)="showDetail(aviso)">
                 <mat-card-header>

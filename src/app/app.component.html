@@ -1,16 +1,12 @@
 <div class="app">
     <nav>
         <div class="toolbar">
-            <mat-toolbar >
+            <mat-toolbar>
                 <button mat-mini-fab [matMenuTriggerFor]="menu" class="example-icon" color="primary"
                     aria-label="Example icon-button with menu icon">
                     <mat-icon>menu</mat-icon>
                 </button>
                 <mat-menu #menu="matMenu">
-                    <button mat-menu-item>
-                        <mat-icon>map</mat-icon>
-                        <span>Ver Mapa</span>
-                    </button>
                     <button mat-menu-item *ngIf="!visible" (click)="drawer.toggle();showListado()">
                         <mat-icon>view_sidebar</mat-icon>
                         <span>Desplegar avisos</span>
