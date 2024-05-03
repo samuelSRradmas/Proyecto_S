@@ -1,54 +1,103 @@
-
-main{
-    display: flex;
-    flex-wrap: wrap;
-}
-app-avisos{
- width: clamp(325px,30vw,90%);
- height: clamp(90vh, 93vh,100vh);
- flex-grow: 1;
-}
-app-mapa{
-    width: clamp(325px,53vw,100%);
-    height: clamp(80vh,93vh,100vh);
-    flex-grow: 2;
-}
-nav{
-    position: sticky;
-    top:0;
-    height: clamp(65px,7vh,130px);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    z-index: 100;
-    background-color:lightgray ;
-    padding: 0 clamp(3px,5vw,40px);
+main {
+  height: clamp(calc(100vh - 130px), 93vh, calc(100vh - 65px));
 }
 
-.boton_movil{
-    display: none;
-    position: fixed;
-    top: 90vh;
-    min-width: 20px;
-    width: 17vw;
-    left: 80vw;
-    background-color: white;
-    border-radius: 99px;
-    border: 3px solid black;
-    text-align: center;
+nav {
+  width: 100vw;
+  position: sticky;
+  top: 0;
+  height: clamp(65px, 7vh, 130px);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+  z-index: 100;
+  background-color: whitesmoke;
+  padding: 0;
 }
+
+mat-drawer {
+  width: clamp(325px, 30vw, 90%);
+  background-color: whitesmoke;
+}
+
+mat-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  //width: auto;
+  flex-grow: 1;
+}
+
+.mat-drawer-container {
+  height: 100%;
+}
+
+mat-slider{
+  flex-grow: 1;
+}
+
+.boton_movil {
+  display: none;
+  position: fixed;
+  top: 80vh;
+  left: 70vw;
+  min-width: 20px;
+  width: 17vw;
+  text-align: center;
+}
+
+.toolbar{
+  display: flex;
+  justify-content: space-around;
+  flex-grow: 1;
+}
+
+.slider{
+  flex-grow: 1;
+  text-align: center;
+  //display: flex;
+  //justify-content: space-around;
+}
+
+app-paginator{
+  flex-grow: 1;
+}
+
+.separador{
+  flex-grow: 1;
+}
+
+@media screen and (max-width: 772px) {
+  nav {
+    height: 150px;
+  }
+
+  main {
+    height: calc(100vh - 150px);
+  }
+
+  nav>h1 {
+    margin-bottom: 0;
+  }
+
+  mat-toolbar>button {
+    margin-left: 10px;
+    margin-top: 10px;
+  }
+
+  mat-slider>input {
+    padding: 0;
+  }
+
+}
+
 @media screen and (max-width: 450px) {
-    .boton_movil {
+  .boton_movil {
     display: block;
-    }
-    
   }
-  @media screen and (max-width: 713px) {
-    nav{
-        height: 150px;
-    }
-    nav>h1 {
-        margin-bottom: 0;
-    }
+
+  mat-drawer {
+    width: 100%;
   }
+}

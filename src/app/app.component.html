@@ -1,14 +1,51 @@
 <div class="app">
     <nav>
-        <h1>Listado de avisos</h1>
+        <div class="toolbar">
+            <mat-toolbar >
+                <button mat-mini-fab [matMenuTriggerFor]="menu" class="example-icon" color="primary"
+                    aria-label="Example icon-button with menu icon">
+                    <mat-icon>menu</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item>
+                        <mat-icon>map</mat-icon>
+                        <span>Ver Mapa</span>
+                    </button>
+                    <button mat-menu-item *ngIf="!visible" (click)="drawer.toggle();showListado()">
+                        <mat-icon>view_sidebar</mat-icon>
+                        <span>Desplegar avisos</span>
+                    </button>
+                    <button mat-menu-item *ngIf="visible" (click)="drawer.toggle();showListado()">
+                        <mat-icon>view_sidebar</mat-icon>
+                        <span>Replegar avisos</span>
+                    </button>
+                </mat-menu>
+                <h1 *ngIf="screenWidth>=450">Listado de avisos</h1>
+            </mat-toolbar>
+        </div>
+        <div class="slider">
+            <mat-slider (change)="onSliderChange($event)" min="9" max="19" step="1">
+                <input matSliderThumb value="12">
+            </mat-slider>
+        </div>
         <app-paginator></app-paginator>
     </nav>
     <main>
-        <app-avisos *ngIf="visible || screenWidth>=450"></app-avisos>
-        <app-mapa *ngIf="!visible || screenWidth>=450"></app-mapa>
-        <div class="boton_movil" (click)="showListado()">
-            <h4 *ngIf="!visible">Listado</h4>
-            <h4 *ngIf="visible">Mapa</h4>
-        </div>
+        <mat-drawer-container class="avisos-container" autosize>
+            <mat-drawer #drawer class="avisos-sidenav" [opened]="visible || (screenWidth>=450)" mode="side">
+                <app-avisos></app-avisos>
+                <div class="boton_movil">
+                    <button type="button" mat-raised-button color="primary" (click)="drawer.toggle(); showListado()">
+                        Mapa
+                    </button>
+                </div>
+            </mat-drawer>
+            <app-mapa></app-mapa>
+            <div class="boton_movil">
+                <button type="button" mat-raised-button color="primary" (click)="drawer.toggle();showListado()">
+                    Listado
+                </button>
+            </div>
+        </mat-drawer-container>
     </main>
 </div>

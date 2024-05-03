@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {MatPaginatorModule} from '@angular/material/paginator';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { PaginationService } from '../SERVICIOS/pagination.service';
 
 @Component({
@@ -9,29 +9,29 @@ import { PaginationService } from '../SERVICIOS/pagination.service';
   templateUrl: './paginator.component.html',
   styleUrl: './paginator.component.scss'
 })
-export class PaginatorComponent implements OnInit{
+export class PaginatorComponent implements OnInit {
 
-public pageSize: number;
-public pageIndex:number;
-constructor(
-  private _paginationService: PaginationService,
-){
-  this.pageSize=10;
-  this.pageIndex=0;
-}
-change($e:any){
+  public pageSize: number;
+  public pageIndex: number;
+  constructor(
+    private _paginationService: PaginationService,
+  ) {
+    this.pageSize = 10;
+    this.pageIndex = 0;
+  }
+  change($e: any) {
     let page = {
-      'size':$e.pageSize,
-      'index':$e.pageIndex
+      'size': $e.pageSize,
+      'index': $e.pageIndex
     }
     this._paginationService.updatePages(page);
-}
-ngOnInit(): void {
-  let page = {
-    'size':this.pageSize,
-    'index':this.pageIndex
   }
+  ngOnInit(): void {
+    let page = {
+      'size': this.pageSize,
+      'index': this.pageIndex
+    }
 
-  this._paginationService.updatePages(page);
-}
+    this._paginationService.updatePages(page);
+  }
 }

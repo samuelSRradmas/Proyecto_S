@@ -12,7 +12,7 @@ export class PaginationService {
   updatePages(pages: any) {
     this.pagesSubjet.next(pages) ;
   }
-  getPages(){
+  getPages(): Observable <any>{
     return this.pagesObservable;
   }
 

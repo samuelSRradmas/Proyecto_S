@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Feature, Map } from 'ol';
 import View from 'ol/View.js';
 import OSM from 'ol/source/OSM.js';
@@ -8,10 +8,11 @@ import { Icon, Style } from 'ol/style.js';
 import { OGCMapTile, Vector as VectorSource } from 'ol/source.js';
 import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer.js';
 import { ModalService } from '../SERVICIOS/modal.service';
-import { AvisoService } from '../SERVICIOS/aviso.service';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
-import { PaginationService } from '../SERVICIOS/pagination.service';
+import { Aviso } from '../SERVICIOS/Aviso';
+import { AvisoDataService } from '../SERVICIOS/aviso.data.service';
+import { ZoomService } from '../SERVICIOS/zoom.service';
 
 
 @Component({
@@ -21,24 +22,30 @@ import { PaginationService } from '../SERVICIOS/pagination.service';
   templateUrl: './mapa.component.html',
   styleUrl: './mapa.component.scss'
 })
-export class MapaComponent implements OnInit {
+export class MapaComponent implements AfterViewInit {
   public mapa!: Map;
   public point!: Feature;
-  public page: any;
-  public limit: any;
+  public page: number;
+  public limit: number;
+  public zoom!: number;
   constructor(
     private _modalService: ModalService,
-    private _avisosService: AvisoService,
-    private _paginationService: PaginationService
+    private _avisosDataService: AvisoDataService,
+    private _zoomService: ZoomService
   ) {
     this.point = new Feature({
       geometry: new Point(fromLonLat([-3.683333, 40.4]))
     });
+    this.page = 1;
+    this.limit = 20;
   }
 
   ngOnInit() {
+
+  }
+  ngAfterViewInit(): void {
     this.createMap();
-    this.getPoints();
+    this.getZoom();
   }
   createMap() {
     this.mapa = new Map({
@@ -47,15 +54,16 @@ export class MapaComponent implements OnInit {
       ],
       view: new View({
         center: fromLonLat([-3.6467410996556, 40.536085123544]),
-        zoom: 11,
+        zoom: this.zoom,
       }),
       target: 'map',
     });
     this.mapa.on('click',
-      (event) => { this.mapa.forEachFeatureAtPixel(event.pixel, (feature) => { let data = feature.getProperties(); this.showModal(data['aviso']);}) }
+      (event) => { this.mapa.forEachFeatureAtPixel(event.pixel, (feature) => { let data = feature.getProperties(); this.showModal(data['aviso']); }) }
     )
+    this.getPoints();
   }
-  drawPoint(aviso: any) {
+  drawPoint(aviso: Aviso) {
 
     const iconStyle = new Style({
       image: new Icon({
@@ -72,47 +80,49 @@ export class MapaComponent implements OnInit {
 
     iconFeature.setStyle(iconStyle);
 
-    const vectorSource = new VectorSource({features: [iconFeature]});
+    const vectorSource = new VectorSource({ features: [iconFeature] });
 
-    const vectorLayer = new VectorLayer({source: vectorSource});
+    const vectorLayer = new VectorLayer({ source: vectorSource });
 
     this.mapa.addLayer(vectorLayer);
   }
 
   getPoints() {
-    this._paginationService.getPages().subscribe(
-      response=>{
-        this.limit=response.size;
-        this.page=response.index;
-         this._avisosService.getAvisos(this.limit, this.page).subscribe(
-      response=>{
+    this._avisosDataService.getAvisosPaginados().subscribe(
+      response => {
         this.deletePoints();
         this.drawPoints(response);
       },
-      error=>{console.log(error)}
-    )
-      },error=>{
-        console.log(error);
-      }
+      error => { console.log(error) }
     )
   }
 
-  showModal(aviso: any) {
+  showModal(aviso: Aviso) {
     this._modalService.showAviso(aviso);
   }
-  deletePoints(){
-    let puntos=this.mapa.getAllLayers();
+  deletePoints() {
+    let puntos = this.mapa.getAllLayers();
     puntos.forEach(punto => {
-      if(punto instanceof VectorLayer) {
+      if (punto instanceof VectorLayer) {
         this.mapa.removeLayer(punto);
-      }  
+      }
     });
   }
-  drawPoints(response:any){
+  drawPoints(response: Array<Aviso>) {
     for (let i = 0; i < response.length; i++) {
       var aviso = response[i];
       this.drawPoint(aviso);
     }
+  }
+  getZoom() {
+    this._zoomService.getZoom().subscribe(
+      response => {
+        this.zoom = response;
+        this.mapa.getView().setZoom(this.zoom);
+      }, error => {
+        console.log(error);
+      }
+    )
   }
 
 }

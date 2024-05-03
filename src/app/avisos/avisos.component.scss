@@ -1,24 +1,32 @@
-.avisos{
-    height:100%;
-    overflow-y: auto;
-
-   
-}
-.aviso-card:hover{
+.aviso-card:hover {
     background-color: lightgrey;
 }
-.aviso-card{
+
+.aviso-card {
     border: 1px solid grey;
-    width: 100%;
 }
-.lista-flex{
+
+.lista-flex {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-
+    width: 100%;
 }
-.opcion-lista-flex{
+
+.opcion-lista-flex {
     width: 90%;
 }
 
+.avisos {
+    display: flex;
+    justify-content: center;
+    height: 100%;
+}
 
+mat-card-header {
+    text-align: center;
+}
+
+.spinner {
+    align-items: center;
+}
