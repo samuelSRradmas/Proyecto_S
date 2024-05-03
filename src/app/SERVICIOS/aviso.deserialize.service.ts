@@ -8,7 +8,7 @@ export class AvisoDeserializeService {
 
   constructor() { }
 
-  deserializeAviso(avisoAPI: AvisoAPI) {
+  deserializeAviso= (avisoAPI : AvisoAPI): Aviso =>{
 
     let aviso = new Aviso();
     
@@ -23,7 +23,7 @@ export class AvisoDeserializeService {
 
     return aviso;
   }
-  deserilizeList = (avisos:any): Aviso[] => {
+  deserilizeList = (avisos:AvisoAPI[]): Aviso[] => {
     return avisos.map(this.deserializeAviso);
   }
 

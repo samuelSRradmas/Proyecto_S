@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { global } from './global';
 import { Observable, map } from 'rxjs';
-import { Aviso } from './Aviso';
+import { Aviso, AvisoAPI } from './Aviso';
 import { AvisoDeserializeService } from './aviso.deserialize.service';
 
 @Injectable({
@@ -19,7 +19,7 @@ export class AvisoService {
     this.url=global.url
   }
   getAvisos(limit:number,page:number): Observable <Aviso[]>{
-    return this.http.get(this.url+'requests?limit='+limit+'&page='+page).pipe(map(this.avisoDeserialize.deserilizeList));
+    return this.http.get<AvisoAPI[]>(this.url+'requests?limit='+limit+'&page='+page).pipe(map(this.avisoDeserialize.deserilizeList));
     }
   }
   
