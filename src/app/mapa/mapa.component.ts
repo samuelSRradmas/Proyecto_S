@@ -104,7 +104,6 @@ export class MapaComponent implements AfterViewInit {
     if (this.mapa) {
       this.deletePoints()
     };
-    console.log(avisos);
     for (let i = 0; i < avisos.length; i++) {
       var aviso = avisos[i];
       this.drawPoint(aviso);
