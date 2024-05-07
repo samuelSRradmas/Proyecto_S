@@ -1,22 +1,32 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { AvisoService } from './aviso.service';
 import { PaginationService } from './pagination.service';
-import { Observable, switchMap } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
+import { Aviso } from './Aviso';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AvisoDataService {
+  public avisosPSubjet = new BehaviorSubject<Aviso[]>([]);
+  public avisosPObsservable = this.avisosPSubjet.asObservable();
+  public size: number;
+  public index: number;
 
   constructor(
     private _avisoService: AvisoService,
     private _paginationService: PaginationService
-  ) { }
-  getAvisosPaginados(): Observable<any>{
-    return this._paginationService.getPages().pipe(
-      switchMap(response => {
-        return this._avisoService.getAvisos(response.size, response.index);
-      })
-    );
+  ) {
   }
+  updateAvisos(): void{
+    this._paginationService.getPages().subscribe((response)=>{
+      this.size =response.size;
+      this.index =response.index;
+      this._avisoService.getAvisos(this.size,this.index).subscribe((avisos: Aviso[]) => {
+        this.avisosPSubjet.next(avisos);
+      });
+    } )
+  }
+
 }
+

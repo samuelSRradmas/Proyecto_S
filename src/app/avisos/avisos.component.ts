@@ -12,6 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatRippleModule } from '@angular/material/core';
 import { AvisoDataService } from '../SERVICIOS/aviso.data.service';
+import { Observable, map} from 'rxjs';
 
 @Component({
   selector: 'app-avisos',
@@ -21,32 +22,17 @@ import { AvisoDataService } from '../SERVICIOS/aviso.data.service';
   styleUrl: './avisos.component.scss'
 })
 export class AvisosComponent implements OnInit {
-  public page: number;
-  public limit: number;
-  public avisos: Array<Aviso>;
-  public visible: boolean;
+  public length: any;
+  public avisosList: Observable<Aviso[]>;
   constructor(
     private _modalService: ModalService,
-    private _avisoDataService: AvisoDataService
+    private _avisosDataService: AvisoDataService
   ) {
-    this.avisos = [];
-    this.visible = true;
-    this.page = 1;
-    this.limit = 20;
   }
   ngOnInit(): void {
-    this.getAvisos();
-  }
-  getAvisos() {
-    this._avisoDataService.getAvisosPaginados().subscribe(
-      response => {
-        this.avisos = response;
-      },
-      error => { console.log(error) }
-    )
+    this.avisosList = this._avisosDataService.avisosPObsservable;
   }
   showDetail(aviso: Aviso) {
     this._modalService.showAviso(aviso);
   }
-
 }

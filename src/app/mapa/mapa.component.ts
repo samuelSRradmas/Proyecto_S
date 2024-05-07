@@ -11,8 +11,10 @@ import { ModalService } from '../SERVICIOS/modal.service';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { Aviso } from '../SERVICIOS/Aviso';
-import { AvisoDataService } from '../SERVICIOS/aviso.data.service';
+
 import { ZoomService } from '../SERVICIOS/zoom.service';
+import { Observable } from 'rxjs';
+import { AvisoDataService } from '../SERVICIOS/aviso.data.service';
 
 
 @Component({
@@ -25,27 +27,26 @@ import { ZoomService } from '../SERVICIOS/zoom.service';
 export class MapaComponent implements AfterViewInit {
   public mapa!: Map;
   public point!: Feature;
-  public page: number;
-  public limit: number;
   public zoom!: number;
+  public avisos: Aviso[];
   constructor(
     private _modalService: ModalService,
     private _avisosDataService: AvisoDataService,
     private _zoomService: ZoomService
   ) {
-    this.point = new Feature({
-      geometry: new Point(fromLonLat([-3.683333, 40.4]))
-    });
-    this.page = 1;
-    this.limit = 20;
+
   }
 
   ngOnInit() {
-
+    this._avisosDataService.avisosPObsservable.subscribe((avisos: Aviso[]) => {
+      this.avisos = avisos;
+      this.drawPoints(this.avisos);
+    });
   }
   ngAfterViewInit(): void {
     this.createMap();
     this.getZoom();
+
   }
   createMap() {
     this.mapa = new Map({
@@ -61,8 +62,8 @@ export class MapaComponent implements AfterViewInit {
     this.mapa.on('click',
       (event) => { this.mapa.forEachFeatureAtPixel(event.pixel, (feature) => { let data = feature.getProperties(); this.showModal(data['aviso']); }) }
     )
-    this.getPoints();
   }
+
   drawPoint(aviso: Aviso) {
 
     const iconStyle = new Style({
@@ -87,30 +88,25 @@ export class MapaComponent implements AfterViewInit {
     this.mapa.addLayer(vectorLayer);
   }
 
-  getPoints() {
-    this._avisosDataService.getAvisosPaginados().subscribe(
-      response => {
-        this.deletePoints();
-        this.drawPoints(response);
-      },
-      error => { console.log(error) }
-    )
-  }
 
   showModal(aviso: Aviso) {
     this._modalService.showAviso(aviso);
   }
   deletePoints() {
-    let puntos = this.mapa.getAllLayers();
-    puntos.forEach(punto => {
-      if (punto instanceof VectorLayer) {
-        this.mapa.removeLayer(punto);
+    let points = this.mapa.getAllLayers();
+    points.forEach(point => {
+      if (point instanceof VectorLayer) {
+        this.mapa.removeLayer(point);
       }
     });
   }
-  drawPoints(response: Array<Aviso>) {
-    for (let i = 0; i < response.length; i++) {
-      var aviso = response[i];
+  drawPoints(avisos: Array<Aviso>) {
+    if (this.mapa) {
+      this.deletePoints()
+    };
+    console.log(avisos);
+    for (let i = 0; i < avisos.length; i++) {
+      var aviso = avisos[i];
       this.drawPoint(aviso);
     }
   }

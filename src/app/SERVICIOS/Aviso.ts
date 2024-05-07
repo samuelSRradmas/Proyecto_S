@@ -18,6 +18,10 @@ export class AvisoAPI {
     public requested_datetime: Date;
     public service_name: string;
 }
+export class Page {
+    public size:number;
+    public index:number;
+}
     /*constructor(
         address: string,
         description: string,
