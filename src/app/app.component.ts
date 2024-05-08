@@ -47,7 +47,7 @@ export class AppComponent implements OnInit{
     this.zoomservice.selectZoom(valorSlider);
   }
   ngOnInit(): void {
-    this.avisoDataService.updateAvisos();
+    this.avisoDataService.updateAvisos(10,1);
   }
 
 }

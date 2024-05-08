@@ -9,18 +9,20 @@ import { AvisoDeserializeService } from './aviso.deserialize.service';
   providedIn: 'root'
 })
 export class AvisoService {
-  public url:string;
-  public avisos_list: any;
-  constructor (
-  private http: HttpClient,
-  private avisoDeserialize: AvisoDeserializeService
+  public url: string;
+  public avisos_list: Aviso[];
 
-  ) { 
-    this.url=global.url
+  constructor(
+    private http: HttpClient,
+    private avisoDeserialize: AvisoDeserializeService
+  ) {
+    this.url = global.url
   }
-  getAvisos(limit:number,page:number): Observable <Aviso[]>{
-    return this.http.get<AvisoAPI[]>(this.url+'requests?limit='+limit+'&page='+page).pipe(map(this.avisoDeserialize.deserilizeList));
-    }
+
+  getAvisos(limit:number, page:number): Observable<Aviso[]> {
+    return this.http.get<AvisoAPI[]>(this.url + 'requests?limit=' + limit + '&page=' + page).pipe(map(this.avisoDeserialize.deserilizeList));
   }
-  
+
+}
+
 

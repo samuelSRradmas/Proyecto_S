@@ -12,7 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatRippleModule } from '@angular/material/core';
 import { AvisoDataService } from '../SERVICIOS/aviso.data.service';
-import { Observable, map} from 'rxjs';
+import { Observable} from 'rxjs';
 
 @Component({
   selector: 'app-avisos',
